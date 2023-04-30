@@ -1,0 +1,55 @@
+using AATE_ZindelaMhlengi_TechChek;
+using NUnit.Framework;
+using System.Linq;
+using System;
+
+namespace AATE_ZindelaMhlengi_TechChek_Tests
+{
+    public class TechChekTests
+    {
+        //These Methods Are For Single Check
+        [TestCase("I like eating apples", "ileap")]
+        public void CheckDuplicatedCharacters_OutputDuplicatesFound(string userEntry, string expected)
+        {
+            string userEntryTrimmed = String.Concat(userEntry.Where(c => !Char.IsWhiteSpace(c)));
+
+            string output = Program.CheckDuplicatedCharacters(userEntryTrimmed.ToLower());
+
+            Assert.AreEqual(expected, output);
+        }
+
+        [TestCase("I like eating apples", 8)]
+        public void CountNumberOfVowels_OutputNumberOfVowels(string userEntryTrimmed, int expected)
+        {
+            var output = Program.CountNumberOfVowels(userEntryTrimmed);
+
+            Assert.AreEqual(expected, output);
+        }
+
+        [TestCase("I eat", "The text has more vowels than non vowels")]
+        [TestCase("that dog", "The text has more non vowels than vowels")]
+        [TestCase("3 a", "The text has an equal amount of vowels and non vowels")]
+        public void CompareMoreVowelsOrNonVowels_OutputDifferentResults(string userEntryTrimmed, string expected)
+        {
+            string output = Program.CompareMoreVowelsOrNonVowels(userEntryTrimmed);
+
+            Assert.AreEqual(expected, output);
+        }
+
+        /*
+        //Now These Methods Are For Multiple Checks
+        [TestCase("I like eating apples", "ileap")]
+        [TestCase("I like eating apples", 8)]
+        public void CombinationOfDuplicates_And_NumberOfVowels(string userEntry, string expected1, int excepected2)
+        {
+            string userEntryTrimmed = String.Concat(userEntry.Where(c => !Char.IsWhiteSpace(c)));
+
+            var output1 = Program.CheckDuplicatedCharacters(userEntryTrimmed);
+            var output2 = Program.CountNumberOfVowels(userEntryTrimmed);
+
+            Assert.AreEqual(expected1, output1);
+            Assert.AreEqual(excepected2 - 1, output2);
+        }
+        */
+    }
+}
