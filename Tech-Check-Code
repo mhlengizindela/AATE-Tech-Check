@@ -1,0 +1,212 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AATE_ZindelaMhlengi_TechChek
+{
+    public class Program
+    {
+        //Global variables to access them to any methods 
+        public static string duplicatedChar = "";
+        public static int countVowels = 0;
+
+        //Boolean Method To Be Access By Other Methods
+        static bool IsVowel(char c)
+        {
+            return "AEIOUaeiou".IndexOf(c) != -1;
+        }
+
+        public static void Main(string[] args)
+        {
+            //Prompt the user to enter text
+            Console.WriteLine("Enter text to be analysed");
+            string userEntry = Console.ReadLine().ToLower();
+
+            //Remove white-spaces, so it can output as per required
+            string userEntryTrimmed = String.Concat(userEntry.Where(c => !Char.IsWhiteSpace(c)));
+
+            //Prompt the user to enter operation
+            Console.WriteLine(@"Enter which operations to do on the supplied text, 
+                               ‘1’ for a duplicate character check, ‘2’ to count the number of vowels, 
+                               ‘3’ to check if there are more vowels or non vowels, or any combination of 
+                               ‘1’, ‘2’ and ‘3’ to perform multiple checks");
+            string userOption = Console.ReadLine();
+
+            //Remove white-spaces, so can not take combination as Twelve, Thirteen, and Twenty-three
+            string userOptionTrimmed = String.Concat(userOption.Where(c => !Char.IsWhiteSpace(c)));
+
+            //Conditional statements to perform as per required by instructions
+            if (userOptionTrimmed == "1")
+            {
+                string duplicatedChar = CheckDuplicatedCharacters(userEntryTrimmed);
+
+                //Output with the conditional statements
+                if (duplicatedChar.Any())
+                {
+                    Console.WriteLine("Found the following duplicates: {0}", duplicatedChar);
+                }
+                else
+                {
+                    Console.WriteLine("No duplicate values were found");
+                }
+            }
+            else if (userOptionTrimmed == "2")
+            {
+                int countVowels = CountNumberOfVowels(userEntryTrimmed);
+
+                //Output with the conditional statements
+                if (countVowels > 0)
+                {
+                    Console.WriteLine("The number of vowels is {0}", countVowels);
+                }
+                else
+                {
+                    Console.WriteLine("No vowels were found");
+                }
+            }
+            else if (userOptionTrimmed == "3")
+            {
+                string compareVowels = CompareMoreVowelsOrNonVowels(userEntryTrimmed);
+
+                //Output
+                Console.WriteLine(compareVowels);
+            }
+
+            //Conditional statements to perform multiple checks
+            if (userOptionTrimmed == "12")
+            {
+                string duplicatedChar = CheckDuplicatedCharacters(userEntryTrimmed);
+
+                //Output with the conditional statements
+                if (duplicatedChar.Any())
+                {
+                    Console.WriteLine("Found the following duplicates: {0}", duplicatedChar);
+                }
+                else
+                {
+                    Console.WriteLine("No duplicate values were found");
+                }
+
+
+                int countVowels = CountNumberOfVowels(userEntryTrimmed);
+
+                //Output with the conditional statements
+                if (countVowels > 0)
+                {
+                    Console.WriteLine("The number of vowels is {0}", countVowels);
+                }
+                else
+                {
+                    Console.WriteLine("No vowels were found");
+                }
+            }
+            else if (userOptionTrimmed == "13")
+            {
+                string duplicatedChar = CheckDuplicatedCharacters(userEntryTrimmed);
+
+                //Output with the conditional statements
+                if (duplicatedChar.Any())
+                {
+                    Console.WriteLine("Found the following duplicates: {0}", duplicatedChar);
+                }
+                else
+                {
+                    Console.WriteLine("No duplicate values were found");
+                }
+
+
+                string compareVowels = CompareMoreVowelsOrNonVowels(userEntryTrimmed);
+
+                //Output
+                Console.WriteLine(compareVowels);
+            }
+            else if (userOptionTrimmed == "23")
+            {
+                int countVowels = CountNumberOfVowels(userEntryTrimmed);
+
+                //Output with the conditional statements
+                if (countVowels > 0)
+                {
+                    Console.WriteLine("The number of vowels is {0}", countVowels);
+                }
+                else
+                {
+                    Console.WriteLine("No vowels were found");
+                }
+
+
+                string compareVowels = CompareMoreVowelsOrNonVowels(userEntryTrimmed);
+
+                //Output
+                Console.WriteLine(compareVowels);
+            }
+
+
+            Console.ReadKey();
+        }
+
+        //Duplicates Check Method 
+        public static string CheckDuplicatedCharacters(string userEntryTrimmed)
+        {
+            for (int i = 0; i < userEntryTrimmed.Length; i++)
+            {
+                char character = userEntryTrimmed[i];
+                if (userEntryTrimmed.LastIndexOf(character) != i && duplicatedChar.IndexOf(character) == -1)
+                {
+                    duplicatedChar += character;
+                }
+            } 
+
+            return duplicatedChar;
+        }
+
+        //Count The Number Of Vowels Method
+        public static int CountNumberOfVowels(string userEntryTrimmed)
+        {
+            foreach (char character in userEntryTrimmed)
+            {
+                if(IsVowel(character))
+                {
+                    countVowels++;
+                }
+            }
+
+            return countVowels;
+        }
+
+        //Output If There Are More Vowels Or Non-Vowels Method
+        public static string CompareMoreVowelsOrNonVowels(string userEntryTrimmed)
+        {
+            int countNumOfVowels = 0;
+            int countNumOfNonVowels = 0;
+
+            foreach (char character in userEntryTrimmed)
+            {
+                if (IsVowel(character))
+                {
+                    countNumOfVowels++;
+                }
+                else if (char.IsLetterOrDigit(character))
+                {
+                    countNumOfNonVowels++;
+                }
+            }
+
+            //Output with the conditional statements
+            if(countNumOfVowels > countNumOfNonVowels)
+            {
+                return "The text has more vowels than non vowels";
+            }
+            else if ( countNumOfNonVowels > countNumOfVowels)
+            {
+                return "The text has more non vowels than vowels";
+            }
+            else
+            {
+                return "The text has an equal amount of vowels and non vowels";
+            }
+        }
+    }
+}
